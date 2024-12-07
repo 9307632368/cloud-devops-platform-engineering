@@ -1,0 +1,17 @@
+### Liveness
+GET http://localhost:8080/health/live
+
+### Readiness
+GET http://localhost:8080/health/ready
+
+### Create a heartbeat
+POST http://localhost:8080/api/heartbeats
+Content-Type: application/json
+
+{"service":"billing-worker","status":"ok","note":"processing queue"}
+
+### Query tracked services
+GET http://localhost:8080/api/services?filter=online
+
+### Simple metrics
+GET http://localhost:8080/metrics
