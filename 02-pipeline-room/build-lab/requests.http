@@ -1,0 +1,15 @@
+@base = http://localhost:3000
+
+GET {{base}}/health
+
+###
+GET {{base}}/api/version
+
+###
+GET {{base}}/api/builds?status=success&limit=2
+
+###
+GET {{base}}/api/builds/build-103
+
+### Should return 400
+GET {{base}}/api/builds?limit=-7

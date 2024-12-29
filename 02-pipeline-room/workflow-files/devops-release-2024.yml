@@ -1,0 +1,43 @@
+name: DevOps lab - release bundle (2024)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout selected commit
+        uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.18.1'
+          cache: npm
+          cache-dependency-path: pipeline-room/build-lab/package-lock.json
+
+      - name: Install dependencies
+        working-directory: pipeline-room/build-lab
+        run: npm ci --ignore-scripts
+
+      - name: Run tests and verify the release bundle
+        working-directory: pipeline-room/build-lab
+        env:
+          RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+        run: npm run check
+
+      - name: Save verified files as a downloadable workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-status-api-${{ github.run_number }}
+          path: pipeline-room/build-lab/dist/
+          if-no-files-found: error
+          retention-days: 14

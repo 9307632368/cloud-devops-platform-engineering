@@ -1,0 +1,52 @@
+name: DevOps lab - code checks (2024)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pipeline-room/**'
+      - 'container-workbench/service-status-api/**'
+      - '.github/workflows/devops-*.yml'
+  pull_request:
+    paths:
+      - 'pipeline-room/**'
+      - 'container-workbench/service-status-api/**'
+      - '.github/workflows/devops-*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests-and-bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v4
+
+      - name: Use the 2024 Node.js version
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.18.1'
+          cache: npm
+          cache-dependency-path: pipeline-room/build-lab/package-lock.json
+
+      - name: Install the demo application's dependencies
+        working-directory: pipeline-room/build-lab
+        run: npm ci --ignore-scripts
+
+      - name: Syntax, tests, bundle and checksum verification
+        working-directory: pipeline-room/build-lab
+        run: npm run check
+
+      - name: Check the service from container-workbench as well
+        working-directory: container-workbench/service-status-api
+        run: npm test
+
+      - name: Check installed workflow templates
+        run: node pipeline-room/commands/check-workflows.mjs

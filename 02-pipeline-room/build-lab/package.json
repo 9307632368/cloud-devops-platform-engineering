@@ -1,0 +1,17 @@
+{
+  "name": "pipeline-room-release-status-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Small release-status API used for learning CI, container builds and release checks",
+  "type": "module",
+  "engines": { "node": ">=20.18.0 <21" },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "start:dist": "node dist/src/server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "lint": "node scripts/lint.mjs",
+    "build": "node scripts/build.mjs",
+    "verify": "node scripts/verify.mjs",
+    "check": "npm run lint && npm test && npm run build && npm run verify"
+  }
+}
