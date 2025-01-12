@@ -1,0 +1,18 @@
+#!/bin/bash
+set -euxo pipefail
+
+dnf install -y nginx
+mkdir -p /usr/share/nginx/html
+cat > /usr/share/nginx/html/index.html <<'HTML'
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Terraform demo</title></head>
+<body>
+  <h1>${display_name} is running</h1>
+  <p>This tiny Nginx page was installed with EC2 user data.</p>
+  <p>Next step: replace it with the app from container-workbench.</p>
+</body>
+</html>
+HTML
+
+systemctl enable --now nginx

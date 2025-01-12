@@ -1,0 +1,12 @@
+flowchart TB
+    Internet((Internet)) --> IGW[Internet gateway]
+    subgraph VPC["VPC: 10.42.0.0/16"]
+        IGW --> PubRT[Public route table]
+        PubRT --> PA[Public subnet /24 - AZ A]
+        PubRT --> PB[Public subnet /24 - AZ B]
+        PA --> EC2[EC2 - Nginx HTTP demo]
+        PrivRT[Private route table - local only] --> PrA[Private subnet /24 - AZ A]
+        PrivRT --> PrB[Private subnet /24 - AZ B]
+    end
+    S3[(Private S3 artifacts bucket)]
+    EC2 -. no bucket access role configured .- S3
