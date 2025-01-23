@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: parcel-quote-settings
+data:
+  APP_ENV: "local-kind"
+  APP_REGION: "local-lab"

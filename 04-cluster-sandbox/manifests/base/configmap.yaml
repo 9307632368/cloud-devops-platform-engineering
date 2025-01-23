@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: parcel-quote-settings
+data:
+  APP_ENV: "base"
+  APP_REGION: "sandbox"
+  PRICING_JSON: >-
+    {"local":{"baseCents":5000,"perKgCents":1500},"national":{"baseCents":8500,"perKgCents":3000},"remote":{"baseCents":12500,"perKgCents":6000}}
