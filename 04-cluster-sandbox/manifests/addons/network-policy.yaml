@@ -1,0 +1,19 @@
+# Optional: allows traffic only from Pods in the same namespace.
+# This can block external ingress/NodePort traffic; test before using.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: parcel-quote-internal-only
+  namespace: parcel-lab
+spec:
+  podSelector:
+    matchLabels:
+      app: parcel-quote
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector: {}
+      ports:
+        - protocol: TCP
+          port: 3000

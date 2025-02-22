@@ -1,0 +1,16 @@
+# Only for the kind cluster with a 30080->8081 port mapping.
+apiVersion: v1
+kind: Service
+metadata:
+  name: parcel-quote-nodeport
+  namespace: parcel-lab
+spec:
+  type: NodePort
+  selector:
+    app: parcel-quote
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      nodePort: 30080
+      protocol: TCP

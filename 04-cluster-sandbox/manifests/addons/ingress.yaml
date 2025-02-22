@@ -1,0 +1,19 @@
+# Requires a separately installed Ingress controller.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: parcel-quote
+  namespace: parcel-lab
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: parcel.local.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: parcel-quote
+                port:
+                  number: 80

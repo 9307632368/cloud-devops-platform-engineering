@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: parcel-quote-settings
+data:
+  APP_ENV: "staging-lab"
+  APP_REGION: "staging-lab"
