@@ -1,0 +1,19 @@
+# Replace YOUR_GITHUB_USER and create a project/namespace before applying.
+# No auto-sync: review and manually sync the chosen environment.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: parcel-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/YOUR_GITHUB_USER/cloud-devops-platform-engineering.git
+    targetRevision: main
+    path: release-control/gitops/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: parcel-prod
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
