@@ -1,0 +1,35 @@
+groups:
+  - name: oncall-lab
+    rules:
+      - alert: LabServiceDown
+        expr: up{job="oncall-demo"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: 'Prometheus cannot scrape the demo service'
+          runbook: 'runbooks/RB01-service-down.md'
+      - alert: LabServiceNotReady
+        expr: lab_ready{job="oncall-demo"} == 0
+        for: 20s
+        labels:
+          severity: warning
+        annotations:
+          summary: 'The API is live but not ready'
+          runbook: 'runbooks/RB02-readiness.md'
+      - alert: LabHighErrorRate
+        expr: (sum(rate(lab_http_requests_total{job="oncall-demo",route="quote",status=~"5.."}[1m])) / clamp_min(sum(rate(lab_http_requests_total{job="oncall-demo",route="quote"}[1m])), 0.001)) > 0.2 and sum(rate(lab_http_requests_total{job="oncall-demo",route="quote"}[1m])) > 0.05
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: 'More than 20 percent of quote requests are 5xx'
+          runbook: 'runbooks/RB03-errors.md'
+      - alert: LabHighLatency
+        expr: histogram_quantile(0.95, sum by (le) (rate(lab_http_request_duration_seconds_bucket{job="oncall-demo"}[2m]))) > 0.25 and sum(rate(lab_http_request_duration_seconds_count{job="oncall-demo"}[2m])) > 0.05
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: 'P95 request latency is above 250 milliseconds'
+          runbook: 'runbooks/RB04-latency.md'

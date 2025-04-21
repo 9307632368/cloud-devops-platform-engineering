@@ -1,0 +1,11 @@
+{
+  "name": "oncall-lab-service",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tiny HTTP service for monitoring and incident drills",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {"node": "^20.18.1"}
+}

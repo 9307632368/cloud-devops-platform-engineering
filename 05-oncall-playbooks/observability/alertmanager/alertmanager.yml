@@ -1,0 +1,12 @@
+global:
+  resolve_timeout: 5m
+route:
+  receiver: lab-sink
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 2h
+receivers:
+  # Empty receiver on purpose. Alerts are visible in the UI, but no external
+  # notifications are sent from this student lab.
+  - name: lab-sink

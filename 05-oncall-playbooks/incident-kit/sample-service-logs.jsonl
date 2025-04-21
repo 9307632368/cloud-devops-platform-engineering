@@ -1,0 +1,8 @@
+{"time":"2024-10-30T09:00:00Z","method":"GET","route":"quote","status":200,"duration_ms":12,"mode":"normal"}
+{"time":"2024-10-30T09:00:01Z","method":"GET","route":"quote","status":200,"duration_ms":18,"mode":"normal"}
+{"time":"2024-10-30T09:00:02Z","method":"GET","route":"quote","status":200,"duration_ms":14,"mode":"normal"}
+{"time":"2024-10-30T09:02:00Z","method":"GET","route":"quote","status":503,"duration_ms":355,"mode":"errors"}
+{"time":"2024-10-30T09:02:01Z","method":"GET","route":"quote","status":503,"duration_ms":330,"mode":"errors"}
+{"time":"2024-10-30T09:02:02Z","method":"GET","route":"quote","status":503,"duration_ms":365,"mode":"errors"}
+{"time":"2024-10-30T09:03:00Z","method":"GET","route":"readiness","status":503,"duration_ms":20,"mode":"not-ready"}
+{"time":"2024-10-30T09:05:00Z","method":"GET","route":"quote","status":200,"duration_ms":16,"mode":"normal"}
